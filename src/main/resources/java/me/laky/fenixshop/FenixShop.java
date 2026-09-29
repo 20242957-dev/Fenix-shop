@@ -9,6 +9,9 @@ public class FenixShop extends JavaPlugin {
 
         getLogger().info("FenixShop se esta iniciando...");
 
+        // Registrar comando /shop
+        getCommand("shop").setExecutor(new ShopCommand());
+
         getLogger().info("FenixShop ha sido activado correctamente.");
     }
 
