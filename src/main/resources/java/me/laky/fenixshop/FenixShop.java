@@ -29,7 +29,7 @@ public class FenixShop extends JavaPlugin {
 
         // Registrar eventos de la tienda
         getServer().getPluginManager().registerEvents(
-                new ShopListener(),
+                new ShopListener(economyManager),
                 this
         );
 
