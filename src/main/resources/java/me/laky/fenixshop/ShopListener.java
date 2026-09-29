@@ -8,6 +8,12 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 
 public class ShopListener implements Listener {
 
+    private final EconomyManager economyManager;
+
+    public ShopListener(EconomyManager economyManager) {
+        this.economyManager = economyManager;
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
 
