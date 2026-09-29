@@ -1,0 +1,10 @@
+name: FenixShop
+version: 1.0.0
+main: me.laky.fenixshop.FenixShop
+author: LAKY
+description: Sistema de tienda para Minecraft 1.12.2
+
+commands:
+  shop:
+    description: Abre la tienda
+    usage: /shop
