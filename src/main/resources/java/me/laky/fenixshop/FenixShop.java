@@ -4,10 +4,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FenixShop extends JavaPlugin {
 
+    private EconomyManager economyManager;
+
     @Override
     public void onEnable() {
 
         getLogger().info("FenixShop se esta iniciando...");
+
+        // Configurar economia
+        economyManager = new EconomyManager(this);
+
+        if (!economyManager.setupEconomy()) {
+
+            getLogger().severe(
+                    "No se pudo conectar con Vault o con un plugin de economia."
+            );
+
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Registrar comando /shop
         getCommand("shop").setExecutor(new ShopCommand());
@@ -18,6 +33,7 @@ public class FenixShop extends JavaPlugin {
                 this
         );
 
+        getLogger().info("Economia conectada correctamente.");
         getLogger().info("FenixShop ha sido activado correctamente.");
     }
 
@@ -25,5 +41,9 @@ public class FenixShop extends JavaPlugin {
     public void onDisable() {
 
         getLogger().info("FenixShop ha sido desactivado.");
+    }
+
+    public EconomyManager getEconomyManager() {
+        return economyManager;
     }
 }
