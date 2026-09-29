@@ -1,6 +1,5 @@
 package me.laky.fenixshop;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,15 +15,15 @@ public class ShopCommand implements CommandExecutor {
             String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Este comando solo puede ser usado por jugadores.");
+            sender.sendMessage(
+                    "Este comando solo puede ser usado por jugadores."
+            );
             return true;
         }
 
         Player player = (Player) sender;
 
-        player.sendMessage(
-                ChatColor.GREEN + "La tienda de FenixShop se esta preparando..."
-        );
+        ShopMenu.open(player);
 
         return true;
     }
