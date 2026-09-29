@@ -1,6 +1,7 @@
 package me.laky.fenixshop;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,62 +18,102 @@ public class ShopListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
 
-        if (!event.getView().getTitle().equals(
-                ChatColor.DARK_GREEN + "FenixShop")) {
+        String title = event.getView().getTitle();
+
+        // Menu principal
+        if (title.equals(ChatColor.DARK_GREEN + "FenixShop")) {
+
+            event.setCancelled(true);
+
+            if (!(event.getWhoClicked() instanceof Player)) {
+                return;
+            }
+
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
+            if (!event.getCurrentItem().hasItemMeta()) {
+                return;
+            }
+
+            if (!event.getCurrentItem().getItemMeta().hasDisplayName()) {
+                return;
+            }
+
+            Player player = (Player) event.getWhoClicked();
+
+            String itemName = ChatColor.stripColor(
+                    event.getCurrentItem()
+                            .getItemMeta()
+                            .getDisplayName()
+            );
+
+            if (itemName.equals("Bloques")) {
+
+                CategoryMenu.open(
+                        player,
+                        "Bloques",
+                        ShopItems.getBlocks()
+                );
+
+            } else if (itemName.equals("Minerales")) {
+
+                CategoryMenu.open(
+                        player,
+                        "Minerales",
+                        ShopItems.getMinerals()
+                );
+
+            } else if (itemName.equals("Comida")) {
+
+                CategoryMenu.open(
+                        player,
+                        "Comida",
+                        ShopItems.getFood()
+                );
+
+            } else if (itemName.equals("Herramientas")) {
+
+                CategoryMenu.open(
+                        player,
+                        "Herramientas",
+                        ShopItems.getTools()
+                );
+            }
+
             return;
         }
 
-        event.setCancelled(true);
+        // Menus de categorias
+        if (title.equals(ChatColor.DARK_GREEN + "Bloques")
+                || title.equals(ChatColor.DARK_GREEN + "Minerales")
+                || title.equals(ChatColor.DARK_GREEN + "Comida")
+                || title.equals(ChatColor.DARK_GREEN + "Herramientas")) {
 
-        if (event.getCurrentItem() == null) {
+            event.setCancelled(true);
+
+            if (!(event.getWhoClicked() instanceof Player)) {
+                return;
+            }
+
+            // Todavia no compramos/vendemos.
+            // Eso lo añadiremos en el siguiente paso.
+
             return;
-        }
-
-        if (!event.getCurrentItem().hasItemMeta()) {
-            return;
-        }
-
-        if (!event.getCurrentItem().getItemMeta().hasDisplayName()) {
-            return;
-        }
-
-        String itemName = ChatColor.stripColor(
-                event.getCurrentItem()
-                        .getItemMeta()
-                        .getDisplayName()
-        );
-
-        if (itemName.equals("Bloques")) {
-
-            event.getWhoClicked().sendMessage(
-                    ChatColor.GREEN + "Categoria: Bloques"
-            );
-
-        } else if (itemName.equals("Minerales")) {
-
-            event.getWhoClicked().sendMessage(
-                    ChatColor.AQUA + "Categoria: Minerales"
-            );
-
-        } else if (itemName.equals("Comida")) {
-
-            event.getWhoClicked().sendMessage(
-                    ChatColor.GOLD + "Categoria: Comida"
-            );
-
-        } else if (itemName.equals("Herramientas")) {
-
-            event.getWhoClicked().sendMessage(
-                    ChatColor.BLUE + "Categoria: Herramientas"
-            );
         }
     }
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
 
-        if (event.getView().getTitle().equals(
-                ChatColor.DARK_GREEN + "FenixShop")) {
+        String title = event.getView().getTitle();
+
+        if (title.equals(ChatColor.DARK_GREEN + "FenixShop")
+                || title.equals(ChatColor.DARK_GREEN + "Bloques")
+                || title.equals(ChatColor.DARK_GREEN + "Minerales")
+                || title.equals(ChatColor.DARK_GREEN + "Comida")
+                || title.equals(ChatColor.DARK_GREEN + "Herramientas")) {
 
             event.setCancelled(true);
         }
