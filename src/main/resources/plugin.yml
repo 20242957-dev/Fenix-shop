@@ -4,6 +4,9 @@ main: me.laky.fenixshop.FenixShop
 author: LAKY
 description: Sistema de tienda para Minecraft 1.12.2
 
+depend:
+  - Vault
+
 commands:
   shop:
     description: Abre la tienda
